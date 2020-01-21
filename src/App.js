@@ -4,16 +4,8 @@ import { Route, Switch } from 'react-router-dom'
 import './App.css';
 
 import HomePage from './pages/homepage/homepage.component'
+import ShopPage from './pages/shop/shop.component'
 
-const HatsPage = (props) => {
-  console.log(props)
-  return (
-    <div>
-      <button onClick={() => { props.history.push('/topics') }}>Topics</button>
-      <h1>HATS PAGE</h1>
-    </div>
-  )
-}
 
 
 function App() {
@@ -21,7 +13,7 @@ function App() {
     <div className="App">
       <Switch>
         <Route exact path="/" component={HomePage} />
-        <Route path="/hats" component={HatsPage} />
+        <Route exact path="/shop" component={ShopPage} />
       </Switch>
     </div>
   );
