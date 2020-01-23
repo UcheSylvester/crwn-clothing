@@ -39,15 +39,17 @@ class App extends React.Component {
         // assessed by calling the data() method
 
         userRef.onSnapshot(userSnapShot => {
+          // console.log(userSnapShot.data())
           this.setState({
             currentUser: {
               id: userSnapShot.id,
               ...userSnapShot.data()
             }
-          }, () => {
-            console.log(this.state)
-
           })
+
+          console.log(this.state)
+
+
         })
 
 
@@ -57,7 +59,6 @@ class App extends React.Component {
 
         // when user is not signed in, there is no userAuth value 
         this.setState({ currentUser: userAuth })
-        console.log(this.state, 'ldll')
       }
     })
   }
