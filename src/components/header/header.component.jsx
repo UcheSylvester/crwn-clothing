@@ -9,7 +9,7 @@ import "./header.styles.scss";
 // user sign out
 const signout = () => auth.signOut();
 
-const Header = ({ currentUser }) => (
+const Header = ({ currentUser, isSigningIn }) => (
   <div className="header">
     <Link className="logo-container" to="/">
       <Logo className="logo" />
@@ -22,14 +22,19 @@ const Header = ({ currentUser }) => (
       <Link className="option" to="contact">
         CONTACT
       </Link>
-      {currentUser ? (
-        <div className="option" onClick={signout}>
-          SIGN OUT
-        </div>
+      {/*show sign in or sign out when not attempting sign in  */}
+      {!isSigningIn ? (
+        currentUser ? (
+          <div className="option" onClick={signout}>
+            SIGN OUT
+          </div>
+        ) : (
+          <Link className="option" to="signin">
+            SIGN IN
+          </Link>
+        )
       ) : (
-        <Link className="option" to="signin">
-          SIGN IN
-        </Link>
+        ""
       )}
     </div>
   </div>

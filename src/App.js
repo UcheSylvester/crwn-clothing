@@ -20,21 +20,43 @@ class App extends React.Component {
     }
   }
 
+  isSigningIn = true;
+
   unsubscribeFromAuth = null;
 
   componentDidMount() {
     this.unsubscribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
 
       if (userAuth) {
+
+        // setting isSigningIn to false
+        this.isSigningIn = false;
+
+        // getting the user reference returned from createUserProfileDocument
         const userRef = await createUserProfileDocument(userAuth)
 
-        userRef.onSnapshot(userSnapShot => console.log(userSnapShot.data()))
+        // userRef.onSnapshot() returns the user data which can be 
+        // assessed by calling the data() method
+
+        userRef.onSnapshot(userSnapShot => {
+          this.setState({
+            currentUser: {
+              id: userSnapShot.id,
+              ...userSnapShot.data()
+            }
+          })
+        })
+
+        console.log(this.state)
+
+      } else {
+        // setting isSigningIn to false
+        this.isSigningIn = false;
+
+        // when user is not signed in, there is no userAuth value 
+        this.setState({ currentUser: userAuth })
+        console.log(this.state, 'ldll')
       }
-
-
-      // this.setState({ currentUser: user })
-
-      // console.log(user)
     })
   }
 
@@ -46,7 +68,7 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
-        <Header currentUser={this.state.currentUser} />
+        <Header currentUser={this.state.currentUser} isSigningIn={this.isSigningIn} />
         <Switch>
           <Route exact path="/" component={HomePage} />
           <Route exact path="/shop" component={ShopPage} />
