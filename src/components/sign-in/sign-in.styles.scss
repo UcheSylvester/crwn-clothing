@@ -14,3 +14,9 @@
     align-items: center;
   }
 }
+
+@media (max-width: 930px) {
+  .sign-in {
+    width: 75%;
+  }
+}
