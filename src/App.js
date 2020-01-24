@@ -46,13 +46,8 @@ class App extends React.Component {
               ...userSnapShot.data()
             }
           })
-
           console.log(this.state)
-
-
         })
-
-
       } else {
         // setting isSigningIn to false
         this.isSigningIn = false;
