@@ -14,7 +14,7 @@ import "./header.styles.scss";
 // user sign out
 const signout = () => auth.signOut();
 
-const Header = ({ currentUser }) => (
+const Header = ({ currentUser, hidden }) => (
   <div className="header">
     <Link className="logo-container" to="/">
       <Logo className="logo" />
@@ -39,13 +39,13 @@ const Header = ({ currentUser }) => (
       )}
       <CartIcon />
     </div>
-
-    <CartDropdrown />
+    {hidden ? null : <CartDropdrown />}
   </div>
 );
 
-const mapStateToProps = state => ({
-  currentUser: state.user.currentUser
+const mapStateToProps = (user, cart) => ({
+  currentUser: user.currentUser,
+  hidden: cart.hidden
 });
 
 export default connect(mapStateToProps)(Header);
