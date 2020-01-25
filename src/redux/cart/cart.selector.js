@@ -1,9 +1,9 @@
 import { createSelector } from 'reselect'
-
-// Input selector take in the state, and return a slice of it
-// they don't use the createSelector.
-//  just like here, selectCart takes state and returns the cart property
-
+/***
+  Input selector take in the state, and return a slice of it
+  they don't use the createSelector.
+  just like here, selectCart takes state and returns the cart property
+ */
 const selectCart = state => state.cart;
 
 /***
@@ -16,6 +16,9 @@ export const selectCartItems = createSelector(
   (cart) => cart.cartItems
 )
 
+/**
+ * Getting the cartItmesCount using a reducer
+ */
 export const selectCartItemsCount = createSelector(
   [selectCartItems],
   cartItems => cartItems.reduce(
@@ -23,4 +26,10 @@ export const selectCartItemsCount = createSelector(
     0
   )
 )
+
+export const selectCartHidden = createSelector(
+  [selectCart],
+  (cart) => cart.hidden
+)
+
 

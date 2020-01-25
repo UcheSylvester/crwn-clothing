@@ -21,6 +21,8 @@ const mapDispatchToProps = dispatch => ({
 });
 
 // Getting the itemCount by adding up the quantity of cartItiems (selector)
+// using selectors to make sure that only changes related to cartIcons causes
+// change to the states
 const mapStateToProps = state => ({
   itemCount: selectCartItemsCount(state)
 });
