@@ -7,8 +7,10 @@ import './App.css';
 
 import HomePage from './pages/homepage/homepage.component'
 import ShopPage from './pages/shop/shop.component'
-import Header from './components/header/header.component'
 import SignInAndSignUpPage from './pages/sign-in-and-sign-up/sign-in-and-sign-up.component'
+import CheckoutPage from './pages/checkout/checkout.component'
+
+import Header from './components/header/header.component'
 import { setCurrentUser } from './redux/user/user.action'
 
 import { selectCurrentUser } from './redux/user/user.selector'
@@ -58,6 +60,7 @@ class App extends React.Component {
         <Switch>
           <Route exact path="/" component={HomePage} />
           <Route path="/shop" component={ShopPage} />
+          <Route exact path="/" component={CheckoutPage} />
           <Route exact path="/signin" render={() =>
             (
               this.props.currentUser ?
