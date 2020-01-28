@@ -1,65 +1,28 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+
 import MenuItem from "../menu-item/menu-item.component";
+
+import { selectDirectorySections } from "../../redux/directory/directory.selector";
 
 import "./directory.styles.scss";
 
-class Directory extends Component {
-  constructor() {
-    super();
+const Directory = ({ sections }) => (
+  <div className="directory-menu">
+    {sections.map(({ title, id, imageUrl, size, linkUrl }) => (
+      <MenuItem
+        key={id}
+        title={title}
+        imageUrl={imageUrl}
+        size={size}
+        linkUrl={linkUrl}
+      />
+    ))}
+  </div>
+);
 
-    this.state = {
-      sections: [
-        {
-          title: "hats",
-          imageUrl: "https://i.ibb.co/cvpntL1/hats.png",
-          id: 1,
-          linkUrl: ""
-        },
-        {
-          title: "jackets",
-          imageUrl: "https://i.ibb.co/px2tCc3/jackets.png",
-          id: 2,
-          linkUrl: ""
-        },
-        {
-          title: "sneakers",
-          imageUrl: "https://i.ibb.co/0jqHpnp/sneakers.png",
-          id: 3,
-          linkUrl: ""
-        },
-        {
-          title: "womens",
-          imageUrl: "https://i.ibb.co/GCCdy8t/womens.png",
-          size: "large",
-          id: 4,
-          linkUrl: ""
-        },
-        {
-          title: "mens",
-          imageUrl: "https://i.ibb.co/R70vBrQ/men.png",
-          size: "large",
-          id: 5,
-          linkUrl: ""
-        }
-      ]
-    };
-  }
+const mapStateToProps = state => ({
+  sections: selectDirectorySections(state)
+});
 
-  render() {
-    return (
-      <div className="directory-menu">
-        {this.state.sections.map(({ title, id, imageUrl, size, linkUrl }) => (
-          <MenuItem
-            key={id}
-            title={title}
-            imageUrl={imageUrl}
-            size={size}
-            linkUrl={linkUrl}
-          />
-        ))}
-      </div>
-    );
-  }
-}
-
-export default Directory;
+export default connect(mapStateToProps)(Directory);
