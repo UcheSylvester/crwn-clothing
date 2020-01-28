@@ -8,6 +8,12 @@ export const selectShopCollections = createSelector(
   shop => shop.collections
 )
 
+// Getting an array of shop collection for preview
+export const selectionCollectionsForPreview = createSelector(
+  [selectShopCollections],
+  collections => Object.keys(collections).map(key => collections[key])
+)
+
 // For selecting a single collection
 export const selectCollection = collectionUrlParam => createSelector(
   [selectShopCollections],
