@@ -4,7 +4,6 @@ import FormInput from "../form-input/form-input.component";
 import CustomButton from "../custom-button/custom-button.component";
 
 import { signInWithGoogle } from "../../firebase/firebase.utils";
-// import { signInWithFacebook } from "../../firebase/firebase.utils";
 import { auth } from "../../firebase/firebase.utils";
 
 import "./sign-in.styles.scss";
@@ -72,14 +71,6 @@ class SignIn extends React.Component {
               {" "}
               Sign In With Google
             </CustomButton>
-
-            {/* <CustomIcon src="assets/facebook.png" />
-            <CustomIcon src="../../assets/facebook.png" /> */}
-
-            {/* <CustomButton onClick={signInWithFacebook}>
-              {" "}
-              Sign In With Facebook
-            </CustomButton> */}
           </div>
         </form>
       </div>
