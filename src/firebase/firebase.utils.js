@@ -45,6 +45,7 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
   return userRef;
 };
 
+// Adding collection and it's documents to our firestore
 export const addCollectionAndDocuments = async (
   collectionKey,
   objectsToAdd
@@ -65,6 +66,21 @@ export const addCollectionAndDocuments = async (
 
   // sending off the batch to firestore
   return await batch.commit();
+};
+
+export const convertCollectionsSnapshotToMap = collections => {
+  const transformedCollections = collections.docs.map(doc => {
+    const { title, items } = doc.data();
+
+    return {
+      routeName: encodeURI(title.toLowerCase()),
+      id: doc.id,
+      title,
+      items
+    };
+  });
+
+  return transformedCollections;
 };
 
 firebase.initializeApp(config);

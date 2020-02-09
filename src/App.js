@@ -15,12 +15,7 @@ import { setCurrentUser } from "./redux/user/user.action";
 
 import { selectCurrentUser } from "./redux/user/user.selector";
 
-import {
-  auth,
-  createUserProfileDocument
-  // addCollectionAndDocuments
-} from "./firebase/firebase.utils";
-// import { selectionCollectionsForPreview } from "./redux/shop/shop.selector";
+import { auth, createUserProfileDocument } from "./firebase/firebase.utils";
 
 class App extends React.Component {
   unsubscribeFromAuth = null;
@@ -28,12 +23,6 @@ class App extends React.Component {
 
   componentDidMount() {
     const { setCurrentUser } = this.props;
-
-    // const collectionArrayToSave = collectionArray.map(({ title, items }) => ({
-    //   title,
-    //   items
-    // }));
-    // addCollectionAndDocuments("collections", collectionArrayToSave);
 
     this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
       if (userAuth) {
