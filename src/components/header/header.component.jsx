@@ -17,8 +17,7 @@ import {
   HeaderContainer,
   LogoContainer,
   OptionsContainer,
-  OptionLink,
-  OptionDiv
+  OptionLink
 } from "./header.styles";
 
 // user sign out
@@ -37,7 +36,9 @@ const Header = ({ currentUser, hidden }) => (
 
       {/*show sign in or sign out when not attempting sign in  */}
       {currentUser ? (
-        <OptionDiv onClick={signout}>SIGN OUT</OptionDiv>
+        <OptionLink as="div" onClick={signout}>
+          SIGN OUT
+        </OptionLink>
       ) : (
         <OptionLink to="signin">SIGN IN</OptionLink>
       )}
