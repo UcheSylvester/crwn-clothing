@@ -45,27 +45,27 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
   return userRef;
 };
 
-// export const addCollectionAndDocuments = async (
-//   collectionKey,
-//   objectsToAdd
-// ) => {
-//   const collectionRef = firestore.collection(collectionKey);
+export const addCollectionAndDocuments = async (
+  collectionKey,
+  objectsToAdd
+) => {
+  const collectionRef = firestore.collection(collectionKey);
 
-//   // batches in firebase are used to save a set of documents at a time
-//   // and if one fails, all fails and vice versa
-//   const batch = firestore.batch();
+  // batches in firebase are used to save a set of documents at a time
+  // and if one fails, all fails and vice versa
+  const batch = firestore.batch();
 
-//   objectsToAdd.forEach(obj => {
-//     // creating new document for each obj with unique key thus no argument in the .doc() call
-//     const newDocRef = collectionRef.doc();
+  objectsToAdd.forEach(obj => {
+    // creating new document for each obj with unique key thus no argument in the .doc() call
+    const newDocRef = collectionRef.doc();
 
-//     // setting the batch of documents to be sent to firestore
-//     batch.set(newDocRef, obj);
-//   });
+    // setting the batch of documents to be sent to firestore
+    batch.set(newDocRef, obj);
+  });
 
-//   // sending off the batch to firestore
-//   return await batch.commit();
-// };
+  // sending off the batch to firestore
+  return await batch.commit();
+};
 
 firebase.initializeApp(config);
 
