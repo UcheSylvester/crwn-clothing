@@ -80,7 +80,12 @@ export const convertCollectionsSnapshotToMap = collections => {
     };
   });
 
-  return transformedCollections;
+  // converting the transformCollections to objects, where the key is equal the title of each
+  // collection and value equals the collection that match the name
+  return transformedCollections.reduce((accumulator, collection) => {
+    accumulator[collection.title.toLowerCase()] = collection;
+    return accumulator;
+  }, {});
 };
 
 firebase.initializeApp(config);
