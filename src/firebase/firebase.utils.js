@@ -1,6 +1,6 @@
-import firebase from 'firebase/app'
-import 'firebase/firestore'
-import 'firebase/auth'
+import firebase from "firebase/app";
+import "firebase/firestore";
+import "firebase/auth";
 
 const config = {
   apiKey: "AIzaSyBVEbR-jPVzI-8nEgFr4Gp4e1noVhfzi98",
@@ -14,8 +14,7 @@ const config = {
 };
 
 export const createUserProfileDocument = async (userAuth, additionalData) => {
-
-  if (!userAuth) return  // cancel if the user is not logged in
+  if (!userAuth) return; // cancel if the user is not logged in
 
   // getting the user reference by querying the document using the userAuth.uid
   const userRef = firestore.doc(`users/${userAuth.uid}`);
@@ -27,7 +26,7 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
   if (!snapShot.exists) {
     // storing user's email, displayName, photoURL and timestamp to our users collection
     const { email, displayName, photoURL } = userAuth;
-    const createdAt = new Date()
+    const createdAt = new Date();
 
     try {
       await userRef.set({
@@ -36,30 +35,71 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
         photoURL,
         createdAt,
         ...additionalData
-      })
+      });
     } catch (error) {
-      console.log('error creating user', error)
+      console.log("error creating user", error);
     }
   }
 
   // returning userRef for future usage
   return userRef;
-}
+};
 
-firebase.initializeApp(config)
+// Adding collection and it's documents to our firestore
+export const addCollectionAndDocuments = async (
+  collectionKey,
+  objectsToAdd
+) => {
+  const collectionRef = firestore.collection(collectionKey);
 
-export const auth = firebase.auth()
-export const firestore = firebase.firestore()
+  // batches in firebase are used to save a set of documents at a time
+  // and if one fails, all fails and vice versa
+  const batch = firestore.batch();
+
+  objectsToAdd.forEach(obj => {
+    // creating new document for each obj with unique key thus no argument in the .doc() call
+    const newDocRef = collectionRef.doc();
+
+    // setting the batch of documents to be sent to firestore
+    batch.set(newDocRef, obj);
+  });
+
+  // sending off the batch to firestore
+  return await batch.commit();
+};
+
+export const convertCollectionsSnapshotToMap = collections => {
+  const transformedCollections = collections.docs.map(doc => {
+    const { title, items } = doc.data();
+
+    return {
+      routeName: encodeURI(title.toLowerCase()),
+      id: doc.id,
+      title,
+      items
+    };
+  });
+
+  // converting the transformCollections to objects, where the key is equal the title of each
+  // collection and value equals the collection that match the name
+  return transformedCollections.reduce((accumulator, collection) => {
+    accumulator[collection.title.toLowerCase()] = collection;
+    return accumulator;
+  }, {});
+};
+
+firebase.initializeApp(config);
+
+export const auth = firebase.auth();
+export const firestore = firebase.firestore();
 
 const googleProvider = new firebase.auth.GoogleAuthProvider();
 const facebookProvider = new firebase.auth.FacebookAuthProvider();
 
-googleProvider.setCustomParameters({ prompt: "select_account" })
-facebookProvider.setCustomParameters({ prompt: "select_account" })
-
+googleProvider.setCustomParameters({ prompt: "select_account" });
+facebookProvider.setCustomParameters({ prompt: "select_account" });
 
 export const signInWithGoogle = () => auth.signInWithPopup(googleProvider);
 export const signInWithFacebook = () => auth.signInWithPopup(facebookProvider);
-
 
 export default firebase;
