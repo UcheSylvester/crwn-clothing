@@ -10,6 +10,7 @@ import "./checkout-item.styles.scss";
 import { connect } from "react-redux";
 
 const CheckoutItem = ({ cartItem, clearCartItem, removeItem, addItem }) => {
+  console.log(cartItem);
   const { name, imageUrl, price, quantity } = cartItem;
   return (
     <div className="checkout-item">
