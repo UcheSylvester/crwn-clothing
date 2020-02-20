@@ -15,20 +15,16 @@ import { setCurrentUser } from "./redux/user/user.action";
 
 import { selectCurrentUser } from "./redux/user/user.selector";
 
-import { auth, createUserProfileDocument } from "./firebase/firebase.utils";
-
 class App extends React.Component {
   unsubscribeFromAuth = null;
   isSigningIn = true;
 
   componentDidMount() {
-    const { setCurrentUser } = this.props;
-
+    // USING THE onAuthStateChanged FROM FIREBASE TO WATCH FOR CURRENTUSER STATE
     // this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
     //   if (userAuth) {
     //     // getting the user reference returned from createUserProfileDocument
     //     const userRef = await createUserProfileDocument(userAuth);
-
     //     // userRef.onSnapshot() returns the user data which can be
     //     // assessed by calling the data() method
     //     userRef.onSnapshot(userSnapShot => {
