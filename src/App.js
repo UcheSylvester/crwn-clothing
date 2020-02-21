@@ -11,24 +11,19 @@ import SignInAndSignUpPage from "./pages/sign-in-and-sign-up/sign-in-and-sign-up
 import CheckoutPage from "./pages/checkout/checkout.component";
 
 import Header from "./components/header/header.component";
-import { setCurrentUser } from "./redux/user/user.action";
 
 import { selectCurrentUser } from "./redux/user/user.selector";
-
-import { auth, createUserProfileDocument } from "./firebase/firebase.utils";
 
 class App extends React.Component {
   unsubscribeFromAuth = null;
   isSigningIn = true;
 
   componentDidMount() {
-    const { setCurrentUser } = this.props;
-
+    // USING THE onAuthStateChanged FROM FIREBASE TO WATCH FOR CURRENTUSER STATE
     // this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
     //   if (userAuth) {
     //     // getting the user reference returned from createUserProfileDocument
     //     const userRef = await createUserProfileDocument(userAuth);
-
     //     // userRef.onSnapshot() returns the user data which can be
     //     // assessed by calling the data() method
     //     userRef.onSnapshot(userSnapShot => {
@@ -77,8 +72,4 @@ const mapStateToProps = state => ({
   currentUser: selectCurrentUser(state)
 });
 
-const mapDispatchToProps = dispatch => ({
-  setCurrentUser: user => dispatch(setCurrentUser(user))
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(mapStateToProps)(App);

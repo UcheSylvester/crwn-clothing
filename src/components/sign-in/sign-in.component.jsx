@@ -3,11 +3,11 @@ import React from "react";
 import FormInput from "../form-input/form-input.component";
 import CustomButton from "../custom-button/custom-button.component";
 
-import { signInWithGoogle } from "../../firebase/firebase.utils";
-import { auth } from "../../firebase/firebase.utils";
-
 import "./sign-in.styles.scss";
-import { googleSignInStart } from "../../redux/user/user.action";
+import {
+  googleSignInStart,
+  emailSignInStart
+} from "../../redux/user/user.action";
 import { connect } from "react-redux";
 
 class SignIn extends React.Component {
@@ -24,16 +24,19 @@ class SignIn extends React.Component {
     event.preventDefault();
 
     const { email, password } = this.state;
+    const { emailSignInStart } = this.props;
 
-    try {
-      // sign user in
-      // Note: this returns the currentUser which is been watched by the onAuthStateChanged()
-      // called in App.js
-      await auth.signInWithEmailAndPassword(email, password);
-      this.setState({ email: "", password: "" });
-    } catch (error) {
-      console.log(error);
-    }
+    emailSignInStart(email, password);
+
+    // try {
+    //   // sign user in
+    //   // Note: this returns the currentUser which is been watched by the onAuthStateChanged()
+    //   // called in App.js
+    //   await auth.signInWithEmailAndPassword(email, password);
+    //   this.setState({ email: "", password: "" });
+    // } catch (error) {
+    //   console.log(error);
+    // }
   };
 
   handleInputChange = event => {
@@ -85,7 +88,9 @@ class SignIn extends React.Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-  googleSignInStart: () => dispatch(googleSignInStart())
+  googleSignInStart: () => dispatch(googleSignInStart()),
+  emailSignInStart: (email, password) =>
+    dispatch(emailSignInStart({ email, password }))
 });
 
 export default connect(null, mapDispatchToProps)(SignIn);
